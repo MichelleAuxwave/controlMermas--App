@@ -1,0 +1,8 @@
+{
+  "name": "controlMermas--App",
+  "app_id": "7dc40458",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
