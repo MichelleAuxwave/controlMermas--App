@@ -23,7 +23,7 @@ export class DatabaseProvider {
         this.isOpen = true;
       }).catch((error) => {
         let eee = this.toastCtrl.create({
-          message: "A: " + error,
+          message: "abrirDB: " + error,
           duration: 5000
         });
         eee.present();
@@ -37,9 +37,9 @@ export class DatabaseProvider {
         this.db.executeSql(sql, [ord, tip, obs]).then((data) => {
           resolve(data);
         }, (error) => {
-          reject(error);
+          reject("guardarOrden: " + error);
           let eee = this.toastCtrl.create({
-            message: "B: " + error,
+            message: "guardarOrden: " + error,
             duration: 5000
           });
           eee.present();
@@ -47,7 +47,7 @@ export class DatabaseProvider {
       })
       .catch((error)=>{
         let eee = this.toastCtrl.create({
-          message: error,
+          message: "guardarOrden: " + error,
           duration: 5000
         });
         eee.present();
@@ -69,16 +69,16 @@ export class DatabaseProvider {
           }
           resolve(arrayOrdenes);
         }, (error) =>{
-          reject(error);
+          reject("mostrarOrdenesGuardadas: " + error);
           let eee = this.toastCtrl.create({
-            message: "C: " + error,
+            message: "mostrarOrdenesGuardadas: " + error,
             duration: 5000
           });
           eee.present();
         })
         .catch((error)=>{
           let eee = this.toastCtrl.create({
-            message: error,
+            message: "mostrarOrdenesGuardadas: " + error,
             duration: 5000
           });
           eee.present();
