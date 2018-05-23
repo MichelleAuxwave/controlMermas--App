@@ -1,14 +1,24 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+  <ion-navbar color="shamir2">
+    <ion-thumbnail item-start center>
+      <img src="../../assets/logos/LOGO-SHAMIR.svg" center>
+    </ion-thumbnail >
   </ion-navbar>
 </ion-header>
-
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+  <ion-card>
+    <ion-card-header center>
+      <h1 block center>REPORTE DE MERMAS</h1>
+    </ion-card-header>
+    <ion-list>
+      <button ion-item [navPush]="nuevoGrupo">
+        <ion-icon name="add" item-start color="shamir1"></ion-icon>
+        Nuevo grupo de mermas
+      </button>
+      <button ion-item [navPush]="grupoAbierto">
+        <ion-icon name="folder" item-start color="shamir1"></ion-icon>
+        Registrar en grupo abierto
+      </button>
+    </ion-list>
+  </ion-card>
 </ion-content>

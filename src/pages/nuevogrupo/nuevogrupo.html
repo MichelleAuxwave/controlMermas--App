@@ -1,18 +1,31 @@
-<!--
-  Generated template for the NuevogrupoPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>nuevogrupo</ion-title>
+  <ion-navbar color="shamir2">
+    <ion-title>Nuevo grupo de mermas</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-list>
 
+    <ion-item>
+      <ion-label fixed>Folio</ion-label>
+      <ion-input type="text" value="123456789-A" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Nombre</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Descripción</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <button ion-button block color="shamir1">Crear nuevo grupo</button>
 </ion-content>
