@@ -31,7 +31,7 @@ export class MyApp {
     .then((db) => {
       console.log(db);
       this.databaseProvider.setDatabase(db);
-      return this.databaseProvider.createTable();
+      return this.databaseProvider.crearTablaMermas();
     })
     .then(() =>{
       this.rootPage = 'TabsPage';
