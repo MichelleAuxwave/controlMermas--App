@@ -8,6 +8,7 @@ import { TabsPage } from '../pages/pages.index';
 import { SQLite } from '@ionic-native/sqlite';
 
 import { DatabaseProvider } from '../providers/database/database';
+import { ToastController } from 'ionic-angular';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,7 +16,7 @@ import { DatabaseProvider } from '../providers/database/database';
 export class MyApp {
   rootPage:any = null;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public sqlite: SQLite, public databaseProvider: DatabaseProvider) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public sqlite: SQLite, public databaseProvider: DatabaseProvider, public toastCtrl: ToastController) {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
@@ -38,6 +39,11 @@ export class MyApp {
     })
     .catch(error =>{
       console.error(error);
+      let toast = this.toastCtrl.create({
+        message: error,
+        duration: 6000
+      });
+      toast.present();
     });
   }
 }

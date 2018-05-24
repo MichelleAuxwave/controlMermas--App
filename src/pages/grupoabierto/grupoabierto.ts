@@ -55,6 +55,11 @@ export class GrupoabiertoPage {
     })
     .catch( error => {
       console.error( error );
+      let toast = this.toastCtrl.create({
+        message: error,
+        duration: 6000
+      });
+      toast.present();
     });
   }
 
@@ -66,6 +71,11 @@ export class GrupoabiertoPage {
     })
     .catch( error => {
       console.error( error );
+      let toast = this.toastCtrl.create({
+        message: error,
+        duration: 6000
+      });
+      toast.present();
     });
   }
 
