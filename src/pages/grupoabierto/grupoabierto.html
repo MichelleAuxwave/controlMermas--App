@@ -25,19 +25,19 @@
         </ion-list-header>
         <ion-item>
             <ion-label>Garantía</ion-label>
-            <ion-radio [color]="radioColor" (ionSelect)="cambiarRadioColor()" checked="true" value="1"></ion-radio>
+            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('GARANTÍA')"></ion-radio>
         </ion-item>
         <ion-item>
             <ion-label>Rechazo</ion-label>
-            <ion-radio [color]="radioColor" (ionSelect)="cambiarRadioColor()" value="2"></ion-radio>
+            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('RECHAZO')"></ion-radio>
         </ion-item>
         <ion-item>
             <ion-label>Cancelación</ion-label>
-            <ion-radio [color]="radioColor" (ionSelect)="cambiarRadioColor()" value="3"></ion-radio>
+            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('CANCELACIÓN')"></ion-radio>
         </ion-item>
         <ion-item>
             <ion-label floating>Comentario</ion-label>
-            <ion-input type="text" [(ngModel)]="merm.obs"></ion-input>
+            <ion-input type="text" [(ngModel)]="observacion"></ion-input>
         </ion-item>
     </ion-list>
     <ion-card>
@@ -62,9 +62,9 @@
 
     <ion-list>
         <ion-item *ngFor="let m of mermas">
-            <h2>{{ m.ord }}</h2>
-            <h2>{{ m.tip }}</h2>
-            <h2>{{ m.ord }}</h2>
+            <h2>{{ m.ide }} . Orden <strong>{{ m.ord }}</strong></h2>
+            <h3>Motivo de Rechazo: <strong>{{ m.tip }}</strong></h3>
+            <p>{{ m.obs }}</p>
         </ion-item>
     </ion-list>
 </ion-content>

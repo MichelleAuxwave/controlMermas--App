@@ -16,8 +16,13 @@ export class DatabaseProvider {
     }
   }
 
+  limpiatTodaLaTablaMermas(){
+    let sql = 'DELETE FROM mermas';
+    return this.db.executeSql(sql, []);
+  }
+
   crearTablaMermas(){
-    let sql = 'CREATE TABLE IF NOT EXISTS mermas(ord INTEGER PRIMARY KEY, tip NVARCHAR, obs NVARCHAR)';
+    let sql = 'DROP TABLE IF EXISTS mermas; CREATE TABLE mermas(ide INTEGER AUTOINCREMENT, ord INTEGER, tip NVARCHAR, obs NVARCHAR)';
     return this.db.executeSql(sql, []);
   }
 

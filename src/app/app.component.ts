@@ -14,7 +14,7 @@ import { ToastController } from 'ionic-angular';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:string = null;
+  rootPage:any = TabsPage;
 
   constructor(
     platform: Platform, 
@@ -27,6 +27,7 @@ export class MyApp {
     {
     platform.ready().then(() => {
       statusBar.styleDefault();
+      this.splashScreen.hide();
       this.createDatabase();
     });
   }
@@ -42,8 +43,7 @@ export class MyApp {
       return this.databaseProvider.crearTablaMermas();
     })
     .then(() =>{
-      this.splashScreen.hide();
-      this.rootPage = 'TabsPage';
+
     })
     .catch(error =>{
       console.error(error);
