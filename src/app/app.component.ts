@@ -14,12 +14,19 @@ import { ToastController } from 'ionic-angular';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = null;
+  rootPage:string = null;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public sqlite: SQLite, public databaseProvider: DatabaseProvider, public toastCtrl: ToastController) {
+  constructor(
+    platform: Platform, 
+    public statusBar: StatusBar, 
+    public splashScreen: SplashScreen, 
+    public sqlite: SQLite, 
+    public databaseProvider: DatabaseProvider, 
+    public toastCtrl: ToastController
+  ) 
+    {
     platform.ready().then(() => {
       statusBar.styleDefault();
-      splashScreen.hide();
       this.createDatabase();
     });
   }
@@ -35,6 +42,7 @@ export class MyApp {
       return this.databaseProvider.crearTablaMermas();
     })
     .then(() =>{
+      this.splashScreen.hide();
       this.rootPage = 'TabsPage';
     })
     .catch(error =>{
