@@ -14,16 +14,13 @@ import { ToastController } from 'ionic-angular';
 export class GrupoabiertoPage {
   radioColor: string = 'dark';
   noOrdenLeida: any;
-  datosGuardados:any[] = [];
 
+  mermas: any[] = [];
   merm = {};
-  private ListaMermas : any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private barcodeScanner: BarcodeScanner, private storage: Storage,
-    private database : DatabaseProvider, public toastCtrl: ToastController) {
-    this.consultarMermas();
-  }
+    private databaseProvider : DatabaseProvider, public toastCtrl: ToastController) { }
 
   cambiarRadioColor(){
     this.radioColor = 'shamir1';
@@ -46,28 +43,29 @@ export class GrupoabiertoPage {
     });
   }
 
-  agregarMerma(){
-    this.database.guardarOrden(parseInt(this.merm['ord']), this.merm['tip'], this.merm['obs']).then(
-      (data) => { console.log(data); this.consultarMermas(); },
-      (error) => {
-        let eee = this.toastCtrl.create({
-          message: "D: " + error,
-          duration: 5000
-        });
-        eee.present();
-    });
-    this.merm = {};
+  ionViewDidLoad(){
+    this.obtenerTodasLasMermas();
   }
 
-  consultarMermas(){
-    this.database.mostrarOrdenesGuardadas().then(
-      (data) => { this.ListaMermas = data; },
-      (error) => {
-        let eee = this.toastCtrl.create({
-          message: "E: " + error,
-          duration: 5000
-        });
-        eee.present();
+  obtenerTodasLasMermas(){
+    this.databaseProvider.obtenerTodasLasMermas()
+    .then(merma => {
+      console.log(merma);
+      this.mermas = merma;
+    })
+    .catch( error => {
+      console.error( error );
+    });
+  }
+
+  agregarUnaMerma(){
+    this.databaseProvider.agregarMerma(this.noOrdenLeida, 'G', this.merm['obs'])
+    .then(merma => {
+      console.log(merma);
+      this.mermas = merma;
+    })
+    .catch( error => {
+      console.error( error );
     });
   }
 

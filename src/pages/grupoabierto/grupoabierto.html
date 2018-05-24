@@ -1,62 +1,70 @@
 <ion-header>
-  <ion-navbar color="shamir2">
-    <ion-title>Grupo abierto</ion-title>
-  </ion-navbar>
+    <ion-navbar color="shamir2">
+        <ion-title>Grupo abierto</ion-title>
+    </ion-navbar>
 </ion-header>
 <ion-content>
-  <p padding left block>Grupo abierto: 123456789-A</p>
-  <ion-card>
-    <ion-list>
-      <ion-item>
-        <button ion-item color="shamir1" block (click)="scanBC()">
+    <p padding left block>Grupo abierto: 123456789-A</p>
+    <ion-card>
+        <ion-list>
+            <ion-item>
+                <button ion-item color="shamir1" block (click)="scanBC()">
           <ion-icon name="barcode" item-start></ion-icon>
           Escanear código de barras
         </button>
-      </ion-item>
-      <ion-item>
-        <p>Orden escaneada</p>
-        <h2>{{noOrdenLeida}}</h2>
-      </ion-item>
+            </ion-item>
+            <ion-item>
+                <p>Orden escaneada</p>
+                <h2>{{noOrdenLeida}}</h2>
+            </ion-item>
+        </ion-list>
+    </ion-card>
+    <ion-list radio-group padding>
+        <ion-list-header>
+            Motivo de merma
+        </ion-list-header>
+        <ion-item>
+            <ion-label>Garantía</ion-label>
+            <ion-radio [color]="radioColor" (ionSelect)="cambiarRadioColor()" checked="true" value="1"></ion-radio>
+        </ion-item>
+        <ion-item>
+            <ion-label>Rechazo</ion-label>
+            <ion-radio [color]="radioColor" (ionSelect)="cambiarRadioColor()" value="2"></ion-radio>
+        </ion-item>
+        <ion-item>
+            <ion-label>Cancelación</ion-label>
+            <ion-radio [color]="radioColor" (ionSelect)="cambiarRadioColor()" value="3"></ion-radio>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Comentario</ion-label>
+            <ion-input type="text" [(ngModel)]="merm.obs"></ion-input>
+        </ion-item>
     </ion-list>
-  </ion-card>
-  <ion-list radio-group padding>
-    <ion-list-header>
-      Motivo de merma
-    </ion-list-header>
-    <ion-item>
-      <ion-label>Garantía</ion-label>
-      <ion-radio [color]="radioColor" (ionSelect)="cambiarRadioColor()" checked="true" value="1"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>Rechazo</ion-label>
-      <ion-radio [color]="radioColor" (ionSelect)="cambiarRadioColor()" value="2"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>Cancelación</ion-label>
-      <ion-radio [color]="radioColor" (ionSelect)="cambiarRadioColor()" value="3"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Comentario</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
-  </ion-list>
-  <ion-card>
-    <ion-card-header>
-      Guardar / Enviar
-    </ion-card-header>
-    <ion-list>
-      <ion-item>
-      <button ion-item color="shamir1" block>
+    <ion-card>
+        <ion-card-header>
+            Guardar / Enviar
+        </ion-card-header>
+        <ion-list>
+            <ion-item>
+                <button ion-item color="shamir1" block (click)="agregarUnaMerma()">
         <ion-icon name="list" item-start></ion-icon>
         Guardar y continuar...
       </button>
-    </ion-item>
-      <ion-item>
-      <button ion-item color="shamir1" block>
+            </ion-item>
+            <ion-item>
+                <button ion-item color="shamir1" block>
         <ion-icon name="send" item-start></ion-icon>
         Enviar grupo completo
       </button>
-    </ion-item>
+            </ion-item>
+        </ion-list>
+    </ion-card>
+
+    <ion-list>
+        <ion-item *ngFor="let m of mermas">
+            <h2>{{ m.ord }}</h2>
+            <h2>{{ m.tip }}</h2>
+            <h2>{{ m.ord }}</h2>
+        </ion-item>
     </ion-list>
-  </ion-card>
 </ion-content>

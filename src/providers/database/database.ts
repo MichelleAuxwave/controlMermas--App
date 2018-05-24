@@ -6,84 +6,37 @@ import { ToastController } from 'ionic-angular';
 
 @Injectable()
 export class DatabaseProvider {
-  private db : SQLiteObject;
-  private isOpen : boolean;
 
-  constructor(public http: Http, public storage: SQLite, public toastCtrl: ToastController) {
-    this.abrirDB();
-  }
+  db: SQLiteObject = null;
+  constructor() {}
 
-  abrirDB(){
-    if(!this.isOpen){
-      this.storage = new SQLite();
-      this.storage.create({name: "data.db", location: "default"}).then((db:SQLiteObject) => {
-        this.db = db;
-        db.executeSql("CREATE TABLE IF NOT EXISTS mermasguardadas(ord int primary key, tip nvarchar, obs nvarchar);", {});
-        db.executeSql("INSERT INTO mermasguardadas VALUES(1234, 'G', 'MERMA DE EJEMPLO');", []);
-        this.isOpen = true;
-      }).catch((error) => {
-        let eee = this.toastCtrl.create({
-          message: "abrirDB: " + error,
-          duration: 5000
-        });
-        eee.present();
-      })
+  setDatabase(db: SQLiteObject){
+    if(this.db === null){
+      this.db = db;
     }
   }
 
-  guardarOrden(ord: number, tip: string, obs: string){
-      return new Promise((resolve, reject) =>{
-        let sql = "insert into mermasguardadas (ord, tip, obs) values (?, ?, ?)";
-        this.db.executeSql(sql, [ord, tip, obs]).then((data) => {
-          resolve(data);
-        }, (error) => {
-          reject("guardarOrden: " + error);
-          let eee = this.toastCtrl.create({
-            message: "guardarOrden: " + error,
-            duration: 5000
-          });
-          eee.present();
-        });
-      })
-      .catch((error)=>{
-        let eee = this.toastCtrl.create({
-          message: "guardarOrden: " + error,
-          duration: 5000
-        });
-        eee.present();
-      });
+  crearTablaMermas(){
+    let sql = 'CREATE TABLE IF NOT EXISTS mermas(ord INTEGER PRIMARY KEY, tip NVARCHAR, obs NVARCHAR)';
+    return this.db.executeSql(sql, []);
   }
 
-  mostrarOrdenesGuardadas(){
-      return new Promise ((resolve, reject) => {
-        this.db.executeSql("select * from mermasguardadas", []).then((data) => {
-          let arrayOrdenes = [];
-          if(data.rows.lenght > 0){
-            for(var i = 0; i < data.rows.lenght; i++){
-               arrayOrdenes.push({
-                ord: data.rows.item(i).ord,
-                tip: data.rows.item(i).tip,
-                obs: data.rows.item(i).obs
-              });
-            }
-          }
-          resolve(arrayOrdenes);
-        }, (error) =>{
-          reject("mostrarOrdenesGuardadas: " + error);
-          let eee = this.toastCtrl.create({
-            message: "mostrarOrdenesGuardadas: " + error,
-            duration: 5000
-          });
-          eee.present();
-        })
-        .catch((error)=>{
-          let eee = this.toastCtrl.create({
-            message: "mostrarOrdenesGuardadas: " + error,
-            duration: 5000
-          });
-          eee.present();
-        });
-      });
+  obtenerTodasLasMermas(){
+    let sql = 'SELECT * FROM mermas';
+    return this.db.executeSql(sql, [])
+    .then(response => {
+      let mermasArray = [];
+      for (let index = 0; index < response.rows.length; index++) {
+        mermasArray.push( response.rows.item(index) );
+      }
+      return Promise.resolve( mermasArray );
+    })
+    .catch(error => Promise.reject(error));
+  }
+
+  agregarMerma(ord: number, tip: string, obs: string){
+    let sql = 'INSERT INTO mermas(ord, tip, obs) VALUES(?,?,?)';
+    return this.db.executeSql(sql, [ord, tip, obs]);
   }
 
 }
