@@ -34,12 +34,13 @@ export class MyApp {
 
   private createDatabase(){
     this.sqlite.create({
-      name: 'data.db',
+      name: 'mermasDataBase.db',
       location: 'default' // the location field is required
     })
     .then((db) => {
       console.log(db);
       this.databaseProvider.setDatabase(db);
+      this.databaseProvider.eliminarTablaMermas();
       return this.databaseProvider.crearTablaMermas();
     })
     .then(() =>{

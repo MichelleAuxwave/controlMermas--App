@@ -25,12 +25,17 @@ export class GrupoabiertoPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private barcodeScanner: BarcodeScanner, private storage: Storage,
     private databaseProvider : DatabaseProvider, public toastCtrl: ToastController,
-    public alertCtrl: AlertController) { }
+    public alertCtrl: AlertController) 
+    { }
 
-  seleccionarMotivoDeMerma(tipo:string){
-    this.radioColor = 'shamir1';
-    this.motivoDeMerma = tipo;
-  }
+    ionViewDidLoad(){
+      //this.obtenerTodasLasMermas();
+    }
+
+    seleccionarMotivoDeMerma(tipo:string){
+      this.radioColor = 'shamir1';
+      this.motivoDeMerma = tipo;
+    }
 
   scanBC(){
     this.barcodeScanner.scan().then(barcodeData => {
@@ -56,10 +61,6 @@ export class GrupoabiertoPage {
       });
       toast.present();
     });
-  }
-
-  ionViewDidLoad(){
-    //this.obtenerTodasLasMermas();
   }
 
   obtenerTodasLasMermas(){
@@ -89,12 +90,13 @@ export class GrupoabiertoPage {
           mensaje = this.observacion;
         }
 
-        this.databaseProvider.agregarMerma(this.noOrdenLeida, this.motivoDeMerma, mensaje)
+        this.databaseProvider.agregarMerma(parseInt(this.noOrdenLeida), this.motivoDeMerma, mensaje)
         .then(merma => {
           this.mermas = merma;
           this.noOrdenLeida = null;
           this.motivoDeMerma = null;
           this.observacion = null;
+
           this.obtenerTodasLasMermas();
         })
         .catch( error => {

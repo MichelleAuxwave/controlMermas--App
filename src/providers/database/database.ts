@@ -16,18 +16,22 @@ export class DatabaseProvider {
     }
   }
 
-  limpiatTodaLaTablaMermas(){
-    let sql = 'DELETE FROM mermas';
+  eliminarTablaMermas(){
+    let sql = 'DROP TABLE IF EXISTS mermas';
     return this.db.executeSql(sql, []);
   }
 
   crearTablaMermas(){
-    let sql = 'DROP TABLE IF EXISTS mermas; CREATE TABLE mermas(ide INTEGER AUTOINCREMENT, ord INTEGER, tip NVARCHAR, obs NVARCHAR)';
-    return this.db.executeSql(sql, []);
+    let sql = 'CREATE TABLE IF NOT EXISTS mermas(ord INTEGER UNIQUE, tip TEXT, obs TEXT, dat1 TEXT)';
+    return this.db.executeSql(sql, []).then(() => {
+
+    }).catch(() => {
+      
+    });
   }
 
   obtenerTodasLasMermas(){
-    let sql = 'SELECT * FROM mermas';
+    let sql = 'SELECT * FROM mermas ORDER BY dat1 DESC';
     return this.db.executeSql(sql, [])
     .then(response => {
       let mermasArray = [];
@@ -40,7 +44,7 @@ export class DatabaseProvider {
   }
 
   agregarMerma(ord: number, tip: string, obs: string){
-    let sql = 'INSERT INTO mermas(ord, tip, obs) VALUES(?,?,?)';
+    let sql = "INSERT INTO mermas(ord, tip, obs, dat1) VALUES(?,?,?, datetime('now'))";
     return this.db.executeSql(sql, [ord, tip, obs]);
   }
 
