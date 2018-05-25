@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-import { DetallehistorialPage } from '../pages.index';
+import { DatabaseProvider } from '../../providers/database/database';
+import { ToastController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -10,13 +10,33 @@ import { DetallehistorialPage } from '../pages.index';
 })
 export class HistorialPage {
 
-  detalleHistorial : any = DetallehistorialPage;
+  mermas: any[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public databaseProvider : DatabaseProvider, 
+    public toastCtrl : ToastController) 
+    {  }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HistorialPage');
+    this.obtenerTodasLasMermas();
+  }
+
+  obtenerTodasLasMermas(){
+    this.databaseProvider.obtenerTodasLasMermas()
+    .then(merma => {
+      console.log(merma);
+      this.mermas = merma;
+    })
+    .catch( error => {
+      console.error( error );
+      let toast = this.toastCtrl.create({
+        message: error,
+        duration: 6000
+      });
+      toast.present();
+    });
   }
 
 }

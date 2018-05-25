@@ -19,25 +19,25 @@
             </ion-item>
         </ion-list>
     </ion-card>
-    <ion-list radio-group padding>
+    <ion-list radio-group padding id="radioSelects1">
         <ion-list-header>
             Motivo de merma
         </ion-list-header>
         <ion-item>
             <ion-label>Garantía</ion-label>
-            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('GARANTÍA')"></ion-radio>
+            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('GARANTÍA')" [checked]="isChecked"></ion-radio>
         </ion-item>
         <ion-item>
             <ion-label>Rechazo</ion-label>
-            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('RECHAZO')"></ion-radio>
+            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('RECHAZO')" [checked]="isChecked"></ion-radio>
         </ion-item>
         <ion-item>
             <ion-label>Cancelación</ion-label>
-            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('CANCELACIÓN')"></ion-radio>
+            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('CANCELACIÓN')" [checked]="isChecked"></ion-radio>
         </ion-item>
         <ion-item>
             <ion-label floating>Comentario</ion-label>
-            <ion-input type="text" [(ngModel)]="observacion"></ion-input>
+            <ion-input type="text" [(ngModel)]="txtObservacion" id="txtObs"></ion-input>
         </ion-item>
     </ion-list>
     <ion-card>
@@ -59,12 +59,4 @@
             </ion-item>
         </ion-list>
     </ion-card>
-
-    <ion-list>
-        <ion-item *ngFor="let m of mermas">
-            <h2>{{ m.dat1 }} | Orden: <strong>{{ m.ord }}</strong></h2>
-            <h3>Motivo de Rechazo: <strong>{{ m.tip }}</strong></h3>
-            <p>{{ m.obs }}</p>
-        </ion-item>
-    </ion-list>
 </ion-content>

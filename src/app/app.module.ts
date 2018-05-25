@@ -22,7 +22,6 @@ import {
   HistorialPage,
   NuevogrupoPage,
   GrupoabiertoPage,
-  DetallehistorialPage,
 } from '../pages/pages.index';
 
 @NgModule({
@@ -33,7 +32,7 @@ import {
     HistorialPage,
     NuevogrupoPage,
     GrupoabiertoPage,
-    DetallehistorialPage,
+
   ],
   imports: [
     BrowserModule,
@@ -48,9 +47,7 @@ import {
     TabsPage,
     HistorialPage,
     NuevogrupoPage,
-    GrupoabiertoPage,
-    DetallehistorialPage,
-
+    GrupoabiertoPage
   ],
   providers: [
     StatusBar,

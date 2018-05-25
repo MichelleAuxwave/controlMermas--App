@@ -22,9 +22,11 @@ export class DatabaseProvider {
   }
 
   crearTablaMermas(){
-    let sql = 'CREATE TABLE IF NOT EXISTS mermas(ord INTEGER UNIQUE, tip TEXT, obs TEXT, dat1 TEXT)';
-    return this.db.executeSql(sql, []).then(() => {
+    let sql = 'CREATE TABLE IF NOT EXISTS mermas(gru TEXT, ord INTEGER UNIQUE, tip TEXT, obs TEXT, dat1 TEXT)';
+    return this.db.executeSql(sql, []).then((data) => {
+      if(data.length == 0){
 
+      }
     }).catch(() => {
       
     });
@@ -44,7 +46,7 @@ export class DatabaseProvider {
   }
 
   agregarMerma(ord: number, tip: string, obs: string){
-    let sql = "INSERT INTO mermas(ord, tip, obs, dat1) VALUES(?,?,?, datetime('now'))";
+    let sql = "INSERT INTO mermas(gru, ord, tip, obs, dat1) VALUES('123456789-A',?,?,?, datetime('now'))";
     return this.db.executeSql(sql, [ord, tip, obs]);
   }
 

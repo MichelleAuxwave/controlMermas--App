@@ -5,11 +5,13 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content>
-    <ion-list>
-      <button ion-item [navPush]="detalleHistorial">
-        00/00/0000
-      </button>
-    </ion-list>
+  <ion-list>
+    <ion-item *ngFor="let m of mermas">
+          <h2>Grupo:&nbsp;{{m.gru}}</h2>
+          <h2>Orden:&nbsp;<strong>{{m.ord}}</strong>&nbsp;|&nbsp;Motivo:&nbsp;<strong>{{m.tip}}</strong></h2>
+          <h3><strong>{{m.obs}}</strong></h3>
+          <p>Guardado el día:&nbsp;{{m.dat1}}</p>
+    </ion-item>
+  </ion-list>
 </ion-content>

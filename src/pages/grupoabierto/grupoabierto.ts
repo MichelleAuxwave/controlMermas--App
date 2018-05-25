@@ -5,7 +5,7 @@ import { Storage } from '@ionic/storage';
 import { DatabaseProvider } from '../../providers/database/database';
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
-import { isNumber } from 'ionic-angular/util/util';
+import { HistorialPage } from '../pages.index'
 
 @IonicPage()
 @Component({
@@ -17,20 +17,17 @@ export class GrupoabiertoPage {
   radioColor: string = 'dark';
   noOrdenLeida: any = null;
   motivoDeMerma: string = null;
-  observacion: string;
+  txtObservacion: string;
+  historial:any = HistorialPage;
 
-  mermas: any[] = [];
-  merm = {};
+  txtObs = document.getElementById('txtObs');
+  isChecked:boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private barcodeScanner: BarcodeScanner, private storage: Storage,
     private databaseProvider : DatabaseProvider, public toastCtrl: ToastController,
     public alertCtrl: AlertController) 
     { }
-
-    ionViewDidLoad(){
-      //this.obtenerTodasLasMermas();
-    }
 
     seleccionarMotivoDeMerma(tipo:string){
       this.radioColor = 'shamir1';
@@ -40,7 +37,7 @@ export class GrupoabiertoPage {
   scanBC(){
     this.barcodeScanner.scan().then(barcodeData => {
       if(!barcodeData.cancelled == true){
-        if(barcodeData.text.length > 5){
+        if(barcodeData.text.length > 12){
           let alert = this.alertCtrl.create({
             title: 'Ups!',
             subTitle: 'Estas escaneando un codigo de barras que no nos pertenece!',
@@ -63,43 +60,37 @@ export class GrupoabiertoPage {
     });
   }
 
-  obtenerTodasLasMermas(){
-    this.databaseProvider.obtenerTodasLasMermas()
-    .then(merma => {
-      console.log(merma);
-      this.mermas = merma;
-    })
-    .catch( error => {
-      console.error( error );
-      let toast = this.toastCtrl.create({
-        message: error,
-        duration: 6000
-      });
-      toast.present();
-    });
-  }
-
   agregarUnaMerma(){
     var mensaje = null;
     if(this.noOrdenLeida != null){
       if(this.motivoDeMerma != null){
-        if(this.observacion == null || this.observacion == "" ){
+        if(this.txtObservacion == null || this.txtObservacion == "" ){
           mensaje = "- No hay observaciónes - ";
         }
         else{
-          mensaje = this.observacion;
+          mensaje = this.txtObservacion;
         }
 
         this.databaseProvider.agregarMerma(parseInt(this.noOrdenLeida), this.motivoDeMerma, mensaje)
         .then(merma => {
-          this.mermas = merma;
+          this.isChecked = false;
           this.noOrdenLeida = null;
           this.motivoDeMerma = null;
-          this.observacion = null;
+          this.txtObservacion = null;
+          this.historial.mermas = merma;
 
-          this.obtenerTodasLasMermas();
+          let alert = this.alertCtrl.create({
+            title: 'Guardado!',
+            subTitle: 'Orden registrada correctamente!',
+            buttons: ['OK']
+          });
+          alert.present()
         })
         .catch( error => {
+          this.isChecked = false;
+          this.noOrdenLeida = null;
+          this.motivoDeMerma = null;
+          this.txtObservacion = null;
 
           console.error( error );
           let toast = this.toastCtrl.create({
