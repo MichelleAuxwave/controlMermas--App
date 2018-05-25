@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, RadioButton } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Storage } from '@ionic/storage';
 import { DatabaseProvider } from '../../providers/database/database';
@@ -20,8 +20,9 @@ export class GrupoabiertoPage {
   txtObservacion: string;
   historial:any = HistorialPage;
 
-  txtObs = document.getElementById('txtObs');
-  isChecked:boolean = false;
+  tipoDeMerma: any;
+  checkIt:any = false;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private barcodeScanner: BarcodeScanner, private storage: Storage,
@@ -73,11 +74,12 @@ export class GrupoabiertoPage {
 
         this.databaseProvider.agregarMerma(parseInt(this.noOrdenLeida), this.motivoDeMerma, mensaje)
         .then(merma => {
-          this.isChecked = false;
+          this.historial.mermas = merma;
           this.noOrdenLeida = null;
           this.motivoDeMerma = null;
           this.txtObservacion = null;
-          this.historial.mermas = merma;
+          this.checkIt = false;
+          
 
           let alert = this.alertCtrl.create({
             title: 'Guardado!',
@@ -87,10 +89,10 @@ export class GrupoabiertoPage {
           alert.present()
         })
         .catch( error => {
-          this.isChecked = false;
           this.noOrdenLeida = null;
           this.motivoDeMerma = null;
           this.txtObservacion = null;
+          this.checkIt = false;
 
           console.error( error );
           let toast = this.toastCtrl.create({

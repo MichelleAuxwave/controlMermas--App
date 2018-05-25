@@ -19,21 +19,21 @@
             </ion-item>
         </ion-list>
     </ion-card>
-    <ion-list radio-group padding id="radioSelects1">
+    <ion-list radio-group padding [(ngModel)]="tipoDeMerma">
         <ion-list-header>
             Motivo de merma
         </ion-list-header>
         <ion-item>
             <ion-label>Garantía</ion-label>
-            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('GARANTÍA')" [checked]="isChecked"></ion-radio>
+            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('GARANTÍA')" [(ngModel)]="checkIt"></ion-radio>
         </ion-item>
         <ion-item>
             <ion-label>Rechazo</ion-label>
-            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('RECHAZO')" [checked]="isChecked"></ion-radio>
+            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('RECHAZO')" [(ngModel)]="checkIt"></ion-radio>
         </ion-item>
         <ion-item>
             <ion-label>Cancelación</ion-label>
-            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('CANCELACIÓN')" [checked]="isChecked"></ion-radio>
+            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('CANCELACIÓN')" [(ngModel)]="checkIt"></ion-radio>
         </ion-item>
         <ion-item>
             <ion-label floating>Comentario</ion-label>
