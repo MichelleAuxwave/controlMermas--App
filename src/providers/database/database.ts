@@ -50,4 +50,16 @@ export class DatabaseProvider {
     return this.db.executeSql(sql, [ord, tip, obs]);
   }
 
+  comprobarNoRedundancia(ord: number){
+    let sql = "SELECT ord FROM mermas WHERE ord =?";
+    return this.db.executeSql(sql, [ord])
+    .then(response => {
+      let res = null;
+      if (response.rows.length > 0) { res = 'y' }
+      else{ res = 'n' }
+      return Promise.resolve( res );
+    })
+    .catch(error => Promise.reject(error));
+  }
+
 }

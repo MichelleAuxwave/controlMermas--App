@@ -25,15 +25,15 @@
         </ion-list-header>
         <ion-item>
             <ion-label>Garantía</ion-label>
-            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('GARANTÍA')" [(ngModel)]="checkIt"></ion-radio>
+            <ion-radio [color]="radioColor" id="rBtn1" (ionSelect)="seleccionarMotivoDeMerma('GARANTÍA')"></ion-radio>
         </ion-item>
         <ion-item>
             <ion-label>Rechazo</ion-label>
-            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('RECHAZO')" [(ngModel)]="checkIt"></ion-radio>
+            <ion-radio [color]="radioColor" id="rBtn2" (ionSelect)="seleccionarMotivoDeMerma('RECHAZO')"></ion-radio>
         </ion-item>
         <ion-item>
             <ion-label>Cancelación</ion-label>
-            <ion-radio [color]="radioColor" (ionSelect)="seleccionarMotivoDeMerma('CANCELACIÓN')" [(ngModel)]="checkIt"></ion-radio>
+            <ion-radio [color]="radioColor" id="rBtn3" (ionSelect)="seleccionarMotivoDeMerma('CANCELACIÓN')"></ion-radio>
         </ion-item>
         <ion-item>
             <ion-label floating>Comentario</ion-label>

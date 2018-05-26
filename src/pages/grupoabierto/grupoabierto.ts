@@ -6,6 +6,7 @@ import { DatabaseProvider } from '../../providers/database/database';
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { HistorialPage } from '../pages.index'
+import * as $ from 'jquery'
 
 @IonicPage()
 @Component({
@@ -21,14 +22,14 @@ export class GrupoabiertoPage {
   historial:any = HistorialPage;
 
   tipoDeMerma: any;
-  checkIt:any = false;
-
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private barcodeScanner: BarcodeScanner, private storage: Storage,
     private databaseProvider : DatabaseProvider, public toastCtrl: ToastController,
     public alertCtrl: AlertController) 
-    { }
+    {
+      $("#rBtn1, #rBtn2, #rBtn3").prop('checked', false);
+    }
 
     seleccionarMotivoDeMerma(tipo:string){
       this.radioColor = 'shamir1';
@@ -48,7 +49,28 @@ export class GrupoabiertoPage {
           this.noOrdenLeida = null;
         }
         else{
-          this.noOrdenLeida = barcodeData.text;
+          this.databaseProvider.comprobarNoRedundancia(parseInt(this.noOrdenLeida)).then((data) => {
+            if(data === 'y'){
+              let alert = this.alertCtrl.create({
+                title: 'Ups!',
+                subTitle: 'La orden que escaneaste ya existe!',
+                buttons: ['OK']
+              });
+              alert.present();
+              this.noOrdenLeida = null;
+            }
+            if(data === 'n'){
+              this.noOrdenLeida = barcodeData.text;
+              $("#rBtn1, #rBtn2, #rBtn3").prop('checked', false);
+            }
+          }).catch((error) => {
+            console.error( error );
+            let toast = this.toastCtrl.create({
+              message: error,
+              duration: 6000
+            });
+            toast.present();
+          });
         }
       }
     }).catch(error => {
@@ -78,8 +100,8 @@ export class GrupoabiertoPage {
           this.noOrdenLeida = null;
           this.motivoDeMerma = null;
           this.txtObservacion = null;
-          this.checkIt = false;
-          
+
+          $("#rBtn1, #rBtn2, #rBtn3").prop('checked', false);
 
           let alert = this.alertCtrl.create({
             title: 'Guardado!',
@@ -92,7 +114,8 @@ export class GrupoabiertoPage {
           this.noOrdenLeida = null;
           this.motivoDeMerma = null;
           this.txtObservacion = null;
-          this.checkIt = false;
+
+          $("#rBtn1, #rBtn2, #rBtn3").prop('checked', false);
 
           console.error( error );
           let toast = this.toastCtrl.create({
@@ -112,6 +135,7 @@ export class GrupoabiertoPage {
       }
     }
     else{
+      $("#rBtn1, #rBtn2, #rBtn3").prop('checked', false);
       let alert = this.alertCtrl.create({
         title: 'Ups!',
         subTitle: 'Parece que aun no has escaneado alguna orden!',
